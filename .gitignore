@@ -2,3 +2,4 @@ config.json
 /.vscode
 /.idea
 /__pycache__
+auctions.json
