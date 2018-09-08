@@ -24,23 +24,23 @@ def update_auctions(cursor, auctions_url):
 
 
 def marketvalue_all(cursor):
+    for row in cursor.execute("SELECT count(DISTINCT item) as count FROM auctions"):
+        count = row[0]
+
     items = []
     for row in cursor.execute("SELECT DISTINCT item FROM auctions ORDER BY item ASC"):
         items.append(int(row[0]))
 
-    counter = 0
     bigQuery = "INSERT INTO marketvalue (item, marketvalue, quantity) VALUES "
     for i in range(0, len(items)):
         mv = marketvalue(items[i], cursor, False)
 
         bigQuery += "({}, {}, {}), ".format(mv["item"], mv["marketvalue"], mv["quantity_sum"])
-        #print("MV for item {} complete. {} completed. mv = {}".format(item, counter, mv))
         if i % 100 == 0:
             cursor.execute(bigQuery[:-2] + ";")
             bigQuery = "INSERT INTO marketvalue (item, marketvalue, quantity) VALUES "
-            print("Done {}".format(i))
+            print("Done {}/{}".format(i, count))
 
     cursor.execute(bigQuery[:-2] + ";")
+    print("Done {}/{}".format(count, count))
 
-
-    print("asd")
