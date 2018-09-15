@@ -2,7 +2,6 @@
 
 Goblineer updater calculates the marketvalue of all items currently on the auctionhouse and outputs it into a `.json` file. That file can be used for anything, but is required for the [Goblineer Addon](https://github.com/Petrosz007/goblineer-addon), [Goblineer Assistant](https://github.com/Petrosz007/goblineer-assistant), and [Quick Price Search](https://github.com/Petrosz007/goblineer-search)
 
----
 ## Setup
 Open the `config_sample.json` and fill it in with your information.
 You can get your [Battle.net API key here](https://dev.battle.net/apps/mykeys).
@@ -10,7 +9,6 @@ You can get your [Battle.net API key here](https://dev.battle.net/apps/mykeys).
 You will need to install some version of [Python 3](https://www.python.org/downloads/).
 
 
----
 ## Usage
 Running `main.py` will run every calculation and in the end it will create the `mv_names.json` file.
 
