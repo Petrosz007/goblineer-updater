@@ -13,7 +13,7 @@ def update_auctions(auctions_url):
         if not auc["buyout"] == 0:
             unit_price = (auc["buyout"] / auc["quantity"]) / 10000
             for i in range(0, auc["quantity"]):
-                auctions_dict[auc["item"]].append(unit_price)
+                auctions_dict[str(auc["item"])].append(unit_price)
 
     return auctions_dict
 
@@ -44,7 +44,7 @@ def get_item_names(items, region, api_key, locale):
     if not len(saved_items) == 0:
         item_names_list = saved_items
         for element in item_names_list:
-            item_names_dict[element["item"]] = element["name"]
+            item_names_dict[str(element["item"])] = element["name"]
 
     count = len(items)
     for i in range(0, count):
@@ -52,8 +52,8 @@ def get_item_names(items, region, api_key, locale):
 
         if not str(item) in item_names_dict:
             name = downloader.get_item_name(item, region, api_key, locale)
-            item_names_dict[item] = name
-            item_names_list.append({"item": item, "name": name})
+            item_names_dict[str(item)] = name
+            item_names_list.append({"item": str(item), "name": name})
 
             print("Name {} / {} complete.".format(i, count))
 

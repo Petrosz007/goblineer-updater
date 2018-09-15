@@ -12,7 +12,7 @@ def marketvalue(item, market_array, name):
         return {"item": str(item), "name": name, "marketvalue": "0", "quantity": "0", "MIN": "0"}
 
     if market_array_count == 1:
-        marketvalue = number_format(market_array[0])
+        marketvalue = float(round(Decimal(market_array[0]), 2))
         return {"item": str(item), "name": name, "marketvalue": str(marketvalue), "quantity": str(market_array_count),
                 "MIN": str(min)}
 
@@ -67,7 +67,3 @@ def step_by_step_array_check(start, max, market_array):
         return market_array[0:max]
 
     return marketvalue_array
-
-
-def number_format(num):
-    return float(round(Decimal(num / 10000), 2))
