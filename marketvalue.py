@@ -9,11 +9,12 @@ def marketvalue(item, market_array, name):
     min = market_array[0]
 
     if market_array_count == 0:
-        return {"item": item, "name": name, "marketvalue": 0, "quantity_sum": 0}
+        return {"item": str(item), "name": name, "marketvalue": "0", "quantity": "0", "MIN": "0"}
 
     if market_array_count == 1:
         marketvalue = number_format(market_array[0])
-        return {"item": item, "name": name, "marketvalue": marketvalue, "quantity_sum": market_array_count, "MIN": min}
+        return {"item": str(item), "name": name, "marketvalue": str(marketvalue), "quantity": str(market_array_count),
+                "MIN": str(min)}
 
 
     market_value_array = []
@@ -32,7 +33,7 @@ def marketvalue(item, market_array, name):
 
     if len(market_value_array) <= 2:
         marketvalue = float(round(Decimal(sum(market_value_array) / len(market_value_array)), 2))
-        return {"item": item, "name": name, "marketvalue": marketvalue, "quantity_sum": market_array_count, "MIN": min}
+        return {"item": str(item), "name": name, "marketvalue": str(marketvalue), "quantity": str(market_array_count), "MIN": str(min)}
 
     # Calculation standard deviations
     standard_deviation = stdev(market_value_array)
@@ -50,7 +51,7 @@ def marketvalue(item, market_array, name):
                 market_value_array_calculated.append(mv)
 
     marketvalue = float(round(Decimal(sum(market_value_array_calculated) / len(market_value_array_calculated)), 2))
-    return {"item": item, "name": name, "marketvalue": marketvalue, "quantity_sum": market_array_count, "MIN": min}
+    return {"item": str(item), "name": name, "marketvalue": str(marketvalue), "quantity": str(market_array_count), "MIN": str(min)}
 
 
 def step_by_step_array_check(start, max, market_array):
