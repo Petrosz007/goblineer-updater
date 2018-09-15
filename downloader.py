@@ -35,3 +35,22 @@ def write_marketvalues(file_name, marketvalues):
         json.dump(marketvalues, f)
 
     print("Written marketvalues to the file.")
+
+def get_item_name(item, region, api_key, locale):
+    url = "https://{}.api.battle.net/wow/item/{}?locale={}&apikey={}".format(region, item, locale, api_key)
+    response = urllib.request.urlopen(url)
+    data = json.load(response)
+
+    return data["name"].replace('"', '\\"')
+
+def load_items(file_name):
+    with open(file_name, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+
+    return data
+
+def write_items(file_name, items):
+    with open(file_name, 'w') as f:
+        json.dump(items, f)
+
+    print("Written items to the file.")
