@@ -1,8 +1,4 @@
-import downloader, db, config, update, marketvalue
-
-# Starting the DB connection
-conn = db.db_start()
-cursor = conn.cursor()
+import downloader, config, update, marketvalue
 
 # Loading the config data
 config_data = config.load()
@@ -21,14 +17,12 @@ print("Got the new data")
 #if not last_modified == last_updated:
 config.write_last_update(last_modified)
 
-update.update_auctions(cursor, auctions_url)
-update.marketvalue_all(cursor)
-#print(marketvalue.marketvalue(1727, cursor))
+auctions_dict = update.update_auctions(auctions_url)
+marketvalues = update.marketvalue_all(auctions_dict)
+downloader.write_marketvalues("mv.json", marketvalues)
 
 print("Done!")
 
 # If the data is not new, do nothing
 #else:
 #    print("Already have the latest data")
-
-conn.close()

@@ -29,3 +29,9 @@ def load_auctions(file_name):
         data = json.load(f)
 
     return data["auctions"]
+
+def write_marketvalues(file_name, marketvalues):
+    with open(file_name, 'w') as f:
+        json.dump(marketvalues, f)
+
+    print("Written marketvalues to the file.")
