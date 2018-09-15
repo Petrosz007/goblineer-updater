@@ -10,6 +10,8 @@ You will need to install some version of [Python 3](https://www.python.org/downl
 
 
 ## Usage
+The `update.bat` file will run `main.py`.
+
 Running `main.py` will run every calculation and in the end it will create the `mv_names.json` file.
 
 ### Using another locale: 
