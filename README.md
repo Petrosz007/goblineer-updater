@@ -6,7 +6,7 @@ Goblineer updater calculates the marketvalue of all items currently on the aucti
 Open the `config_sample.json` and fill it in with your information. Rename it to `config.json`.
 You can get your [Battle.net API key here](https://dev.battle.net/apps/mykeys).
 
-Make sure that the `install_location` doesn't have any `\ \` characters. Replace all of the `\ \` with `/`
+Make sure that the `install_location` doesn't have any `\` characters. Replace all of the `\` with `/`
 
 If you don't use the compiled .exe verion, you will need to install some version of [Python 3](https://www.python.org/downloads/).
 
