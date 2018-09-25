@@ -7,6 +7,7 @@ region = config_data["region"]
 realm = config_data["realm"]
 locale = config_data["locale"]
 last_updated = config_data["last_updated"]
+install_location = config_data["install_location"]
 
 # Getting the latest data from the Blizzard API
 latestData = downloader.get_latest_data(region, realm, api_key)
@@ -21,6 +22,7 @@ if not last_modified == last_updated:
     auctions_dict = update.update_auctions(auctions_url)
     marketvalues = update.marketvalue_all(auctions_dict, region, api_key, locale)
     downloader.write_marketvalues("mv_names.json", marketvalues)
+    downloader.write_marketvalues_to_addon(install_location, marketvalues)
 
     print("Done!")
 

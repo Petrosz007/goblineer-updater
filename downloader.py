@@ -54,3 +54,10 @@ def write_items(file_name, items):
         json.dump(items, f)
 
     print("Written items to the file.")
+
+def write_marketvalues_to_addon(path, marketvalues):
+    print(path + "/Interface/AddOns/Goblineer/data.lua")
+    with open(path + "/Interface/AddOns/Goblineer/data.lua", 'w') as f:
+        f.write("goblineer_data = [" + json.dumps(marketvalues, separators=(',',':')) + "]")
+
+    print("Written marketvalues to the addon.")
