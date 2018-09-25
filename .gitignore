@@ -5,3 +5,6 @@ config.json
 auctions.json
 mv.json
 mv_names.json
+
+/build
+/dist

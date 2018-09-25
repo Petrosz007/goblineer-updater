@@ -25,7 +25,9 @@ if not last_modified == last_updated:
     downloader.write_marketvalues_to_addon(install_location, marketvalues)
 
     print("Done!")
+    input("Press any key to close the program...")
 
 # If the data is not new, do nothing
 else:
-   print("Already have the latest data")
+   print("Already have the latest data. If you want to force an update, in config.json change the number next to \"last_updated\" to 0.")
+   input("Press any key to close the program...")

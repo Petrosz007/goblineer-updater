@@ -3,7 +3,7 @@ from marketvalue import marketvalue
 from collections import defaultdict
 
 def update_auctions(auctions_url):
-    #downloader.download_auctions(auctions_url, "auctions.json")
+    downloader.download_auctions(auctions_url, "auctions.json")
     print("Downloaded the auctions")
     auctions = downloader.load_auctions("auctions.json")
     print("Loaded the auctions")
