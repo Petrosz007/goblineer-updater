@@ -1,6 +1,7 @@
 import downloader
 from marketvalue import marketvalue
 from collections import defaultdict
+import ast
 
 def update_auctions(auctions_url):
     downloader.download_auctions(auctions_url, "auctions.json")
@@ -12,8 +13,14 @@ def update_auctions(auctions_url):
     for auc in auctions:
         if not auc["buyout"] == 0:
             unit_price = (auc["buyout"] / auc["quantity"]) / 10000
+
+            dict_key = [str(auc["item"])]
+            if("bonusLists" in auc):
+                for bonus_id in auc["bonusLists"]:
+                    dict_key.append(str(bonus_id["bonusListId"]))
+
             for i in range(0, auc["quantity"]):
-                auctions_dict[str(auc["item"])].append(unit_price)
+                auctions_dict[repr(dict_key)].append(unit_price)
 
     return auctions_dict
 
@@ -23,12 +30,10 @@ def marketvalue_all(auctions_dict, region, api_key, locale):
     for i in auctions_dict.keys():
         items.append(i)
 
-    item_names = get_item_names(items, region, api_key, locale)
-
     count = len(items)
     marketvalues = []
     for i in range(0, len(items)):
-        mv = marketvalue(items[i], auctions_dict[items[i]], item_names[str(items[i])])
+        mv = marketvalue(ast.literal_eval(items[i]), auctions_dict[items[i]])
         marketvalues.append(mv)
         print("Done {} / {}".format(i, count))
 

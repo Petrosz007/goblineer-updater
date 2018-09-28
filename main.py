@@ -21,7 +21,7 @@ if not last_modified == last_updated:
 
     auctions_dict = update.update_auctions(auctions_url)
     marketvalues = update.marketvalue_all(auctions_dict, region, api_key, locale)
-    downloader.write_marketvalues("mv_names.json", marketvalues)
+    downloader.write_marketvalues("marketvalues.json", marketvalues)
     downloader.write_marketvalues_to_addon(install_location, marketvalues)
 
     print("Done!")

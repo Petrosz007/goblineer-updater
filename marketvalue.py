@@ -2,18 +2,17 @@ from decimal import Decimal
 from math import ceil
 from statistics import stdev
 
-
-def marketvalue(item, market_array, name):
+def marketvalue(item, market_array):
     market_array.sort()
     market_array_count = len(market_array)
     min = market_array[0]
 
     if market_array_count == 0:
-        return {"item": str(item), "name": name, "marketvalue": "0", "quantity": "0", "MIN": "0"}
+        return {"item": item[0], "bonusIds": item[1:], "marketvalue": "0", "quantity": "0", "MIN": "0"}
 
     if market_array_count == 1:
         marketvalue = float(round(Decimal(market_array[0]), 2))
-        return {"item": str(item), "name": name, "marketvalue": str(marketvalue), "quantity": str(market_array_count),
+        return {"item": item[0], "bonusIds": item[1:], "marketvalue": str(marketvalue), "quantity": str(market_array_count),
                 "MIN": str(min)}
 
 
@@ -33,7 +32,7 @@ def marketvalue(item, market_array, name):
 
     if len(market_value_array) <= 2:
         marketvalue = float(round(Decimal(sum(market_value_array) / len(market_value_array)), 2))
-        return {"item": str(item), "name": name, "marketvalue": str(marketvalue), "quantity": str(market_array_count), "MIN": str(min)}
+        return {"item": item[0], "bonusIds": item[1:], "marketvalue": str(marketvalue), "quantity": str(market_array_count), "MIN": str(min)}
 
     # Calculation standard deviations
     standard_deviation = stdev(market_value_array)
@@ -51,19 +50,19 @@ def marketvalue(item, market_array, name):
                 market_value_array_calculated.append(mv)
 
     marketvalue = float(round(Decimal(sum(market_value_array_calculated) / len(market_value_array_calculated)), 2))
-    return {"item": str(item), "name": name, "marketvalue": str(marketvalue), "quantity": str(market_array_count), "MIN": str(min)}
+    return {"item": item[0], "bonusIds": item[1:], "marketvalue": str(marketvalue), "quantity": str(market_array_count), "MIN": str(min)}
 
 
 def step_by_step_array_check(start, max, market_array):
-    marketvalue_array = []
-
+    cut_index = 0
     for i in range(start, max):
         if i == max:
-            marketvalue_array = market_array[0:i + 1]
-        elif market_array[i] * 1.30 >= market_array[i + 1]:
-            marketvalue_array = market_array[0:i + 1]
+            cut_index = i
+        elif market_array[i] * 1.30 <= market_array[i + 1]:
+            cut_index = i
+            break
 
-    if len(marketvalue_array) == 0:
+    if cut_index == 0:
         return market_array[0:max]
 
-    return marketvalue_array
+    return market_array[0:cut_index + 1]
