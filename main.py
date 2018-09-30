@@ -1,4 +1,8 @@
 import downloader, config, update, marketvalue
+import sys
+
+# Get the commandline arguments
+no_pause = True if ("-no-pause" in sys.argv) else False
 
 # Loading the config data
 config_data = config.load()
@@ -25,9 +29,11 @@ if not last_modified == last_updated:
     downloader.write_marketvalues_to_addon(install_location, marketvalues)
 
     print("Done!")
-    input("Press any key to close the program...")
+    input("Press any key to close the program...") if not no_pause else sys.exit(0)
+    sys.exit(0)
 
 # If the data is not new, do nothing
 else:
    print("Already have the latest data. If you want to force an update, in config.json change the number next to \"last_updated\" to 0.")
-   input("Press any key to close the program...")
+   input("Press any key to close the program...") if not no_pause else sys.exit(0)
+   sys.exit(0)
