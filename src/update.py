@@ -2,6 +2,8 @@ from dotenv import load_dotenv
 from os import getenv
 import requests
 from tqdm import tqdm
+from collections import defaultdict
+from typing import List
 
 
 def get_oauth_token(client_id: str, client_secret: str, url: str='https://us.battle.net/oauth/token') -> str:
@@ -119,7 +121,53 @@ def get_auction_data(url: str) -> dict:
         raise ConnectionError('Request make to Blizzard servers failed, are you sure you entered the correct client information? HTTP error:', response.status_code)
 
     # Returning the data
-    return response.json()
+    data = response.json()
+    return data['auctions']
+
+
+def parse_auctions(auctions: List[dict]) -> dict:
+    """
+    Parses the auctions returned from the API
+
+    Args:
+        auctions: List[dict]: The auctions returned from the API
+
+    Returns:
+        dict: The parsed auctions
+
+    Raises:
+
+    """
+
+    # Type checking
+    if not isinstance(auctions, list):
+        raise TypeError
+
+
+    parsed_auctions = defaultdict(list)
+    for auc in tqdm(auctions):
+        # The item won't be taken to account when it has no buyout
+        if auc['buyout'] != 0:
+            unit_price = auc['buyout'] / auc['quantity'] / 10000
+
+            # Creating the dictionary key with the item id and bonus ids
+            item_id_tuple = (auc['item'],)
+            dict_key_list = list(item_id_tuple)
+
+            if 'bonusLists' in auc:
+                for bonus_id in auc['bonusLists']:
+                    dict_key_list.append(bonus_id['bonusListId'])
+
+            dict_key = tuple(dict_key_list)
+
+            # Appending the unit price 'quantity' times to the dict
+            for _ in range(0, auc['quantity']):
+                parsed_auctions[dict_key].append(unit_price)
+    
+    for unit_prices in parsed_auctions.values():
+        unit_prices.sort()
+
+    return parsed_auctions
 
 
 
@@ -133,6 +181,9 @@ def main():
     print(ah_status)
 
     auction_data = get_auction_data(ah_status['url'])
+    print("Got the data")
+
+    parsed_auctions = parse_auctions(auction_data)
 
     print('Done!')
 
