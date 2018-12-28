@@ -1,14 +1,3 @@
-config.json
+.env
 /.vscode
-/.idea
 /__pycache__
-auctions.json
-mv.json
-mv_names.json
-
-/build
-/dist
-myain.spec
-goblineer-updater.zip
-main.spec
-marketvalues.json

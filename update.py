@@ -1,6 +1,7 @@
 import downloader
 from marketvalue import marketvalue
 from collections import defaultdict
+from tqdm import tqdm
 import ast
 
 def update_auctions(auctions_url):
@@ -32,10 +33,10 @@ def marketvalue_all(auctions_dict, region, api_key, locale):
 
     count = len(items)
     marketvalues = []
-    for i in range(0, len(items)):
+    for i in tqdm(range(0, len(items))):
         mv = marketvalue(ast.literal_eval(items[i]), auctions_dict[items[i]])
         marketvalues.append(mv)
-        print("Done {} / {}".format(i, count))
+        # print("Done {} / {}".format(i, count))
 
     return marketvalues
 
