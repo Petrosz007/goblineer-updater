@@ -136,15 +136,15 @@ def parse_auctions(auctions: List[dict]) -> dict:
         dict: The parsed auctions
 
     Raises:
-
+        TypeError: If the provided arguments are of the wrong type
     """
 
     # Type checking
     if not isinstance(auctions, list):
         raise TypeError
 
-
-    parsed_auctions = defaultdict(list)
+    # Parsing the auctions
+    parsed_auctions = defaultdict(dict)
     for auc in tqdm(auctions):
         # The item won't be taken to account when it has no buyout
         if auc['buyout'] != 0:
@@ -160,12 +160,12 @@ def parse_auctions(auctions: List[dict]) -> dict:
 
             dict_key = tuple(dict_key_list)
 
-            # Appending the unit price 'quantity' times to the dict
-            for _ in range(0, auc['quantity']):
-                parsed_auctions[dict_key].append(unit_price)
-    
-    for unit_prices in parsed_auctions.values():
-        unit_prices.sort()
+            # This will create a dict, the key is the unit price, the value is the number of times that unit_price appears
+            if unit_price in parsed_auctions[dict_key]:
+                parsed_auctions[dict_key][unit_price] += auc['quantity']
+            else:
+                parsed_auctions[dict_key][unit_price] = auc['quantity']
+
 
     return parsed_auctions
 

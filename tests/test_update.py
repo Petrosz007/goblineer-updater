@@ -58,7 +58,7 @@ class TestParseAuctions(object):
             {'item': 1, 'buyout': 0, 'quantity': 10},
             {'item': 1, 'buyout': 10000, 'quantity': 1}
         ]
-        assert {(1,): [1]} == parse_auctions(test1)
+        assert {(1,): {1: 1}} == parse_auctions(test1)
 
         test2 = [
             {'item': 1, 'bonusLists': [], 'buyout': 20000, 'quantity': 2},
@@ -67,4 +67,4 @@ class TestParseAuctions(object):
             {'item': 2, 'bonusLists': [{'bonusListId': 3}, {'bonusListId': 4},], 'buyout': 20000, 'quantity': 1},
             {'item': 2, 'bonusLists': [{'bonusListId': 3}, {'bonusListId': 4},], 'buyout': 20000, 'quantity': 1}
         ]
-        assert {(1,): [1, 1], (1, 1): [1, 1], (1, 2): [1, 1], (2, 3, 4): [2, 2]} == parse_auctions(test2)
+        assert {(1,): {1: 2}, (1, 1): {1: 2}, (1, 2): {1: 2}, (2, 3, 4): {2: 2}} == parse_auctions(test2)
