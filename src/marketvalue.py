@@ -1,6 +1,6 @@
 import numpy
 
-def marketvalue(prices: dict) -> float:
+def marketvalue(prices: dict) -> dict:
     """
     Calculates the marketvalue from the given prices
 
@@ -8,7 +8,7 @@ def marketvalue(prices: dict) -> float:
         prices: dict: The prices to calculate from
 
     Returns:
-        float: The calculated marketvalue of the prices
+        dict: The calculated marketvalue of the prices, the quantity of prices and the minimum of the prices
 
     Raises:
         TypeError: If the provided arguments are of the wrong type
@@ -23,7 +23,7 @@ def marketvalue(prices: dict) -> float:
 
     # If there are no items, the marketvalue is 0
     if count == 0:
-        return 0
+        return {'marketvalue': 0, 'quantity': 0, 'MIN': 0}
     
     unit_prices = list(prices.keys())
     unit_prices.sort()
@@ -31,7 +31,12 @@ def marketvalue(prices: dict) -> float:
 
     # If there is only one price, we can return it
     if len(unit_prices) == 1:
-        return minimum
+        return {'marketvalue': minimum, 'quantity': count, 'MIN': minimum}
+
+    # The algorithm screws up if the count is <= 3, so if it is we will just take the average
+    if count <= 3:
+        values = dict_to_list(prices)
+        return {'marketvalue': numpy.average(values), 'quantity': count, 'MIN': minimum}
 
     # Step by step array check
     checked_item_count, current_percentage = [0,0]
@@ -55,7 +60,6 @@ def marketvalue(prices: dict) -> float:
             price_array = price_array[:int(count * 0.30)]
             break
 
-
     # Calculate the standard deviation and high/low breakpoints
     deviation = numpy.std(price_array)
     average = numpy.average(price_array)
@@ -63,10 +67,12 @@ def marketvalue(prices: dict) -> float:
     breakpoint_high = average + deviation* 1.5
 
     # Throwing out the data outside of the breakpoint scope
-    price_array_filtered = list(filter(lambda x: x > breakpoint_low and x < breakpoint_high, price_array))
+    price_array_filtered = list(filter(lambda x: x >= breakpoint_low and x <= breakpoint_high, price_array))
 
     # Returning the average of the filtered prices
-    return  numpy.average(price_array_filtered)
+    marketvalue = numpy.average(price_array_filtered)
+
+    return {'marketvalue': marketvalue, 'quantity': count, 'MIN': minimum}
 
 
 
@@ -91,3 +97,6 @@ def dict_to_list(d: dict) -> list:
         tmp.extend(v * [k])
 
     return tmp
+
+if __name__ == '__main__':
+    marketvalue({129.4372: 2, 57.1476: 1, 129.4373: 1})

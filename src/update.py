@@ -4,6 +4,9 @@ import requests
 from tqdm import tqdm
 from collections import defaultdict
 from typing import List
+from marketvalue import marketvalue
+from json import dump
+from printer import start_process_print, success_process_print
 
 
 def get_oauth_token(client_id: str, client_secret: str, url: str='https://us.battle.net/oauth/token') -> str:
@@ -168,25 +171,3 @@ def parse_auctions(auctions: List[dict]) -> dict:
 
 
     return parsed_auctions
-
-
-
-def main():
-    load_dotenv()
-
-    oauth_token = get_oauth_token(getenv('OAUTH_CLIENT'), getenv('OAUTH_SECRET'))
-    print(oauth_token)
-
-    ah_status = get_auction_data_status(oauth_token, getenv("REGION"), getenv("REALM"), getenv("LOCALE"))
-    print(ah_status)
-
-    auction_data = get_auction_data(ah_status['url'])
-    print("Got the data")
-
-    parsed_auctions = parse_auctions(auction_data)
-
-    print('Done!')
-
-
-if __name__ == "__main__":
-    main()
