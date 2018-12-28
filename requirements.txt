@@ -1,0 +1,6 @@
+tqdm==4.28.1
+numpy==1.15.4
+requests==2.21.0
+pytest==4.0.2
+python-dotenv==0.10.1
+typing==3.6.6

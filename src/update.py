@@ -4,9 +4,10 @@ import requests
 from tqdm import tqdm
 from collections import defaultdict
 from typing import List
-from marketvalue import marketvalue
 from json import dump
-from printer import start_process_print, success_process_print
+
+from .marketvalue import marketvalue
+from .printer import start_process_print, success_process_print
 
 
 def get_oauth_token(client_id: str, client_secret: str, url: str='https://us.battle.net/oauth/token') -> str:

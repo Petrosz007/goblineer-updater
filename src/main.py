@@ -2,9 +2,10 @@ from dotenv import load_dotenv
 from os import getenv, path
 from tqdm import tqdm
 from json import dumps, dump
-from marketvalue import marketvalue
-from printer import start_process_print, success_process_print
-from update import get_oauth_token, get_auction_data_status, get_auction_data, parse_auctions
+
+from .marketvalue import marketvalue
+from .printer import start_process_print, success_process_print
+from .update import get_oauth_token, get_auction_data_status, get_auction_data, parse_auctions
 
 def main():
     load_dotenv()

@@ -44,5 +44,5 @@ class TestMarketvalue(object):
         assert {'marketvalue': 14.5, 'quantity': 24, 'MIN': 5} == marketvalue(test2)
 
         test3 = {129.4372: 2, 57.1476: 1, 129.4373: 1}
-        assert {'marketvalue': 57.1476, 'quantity': 24, 'MIN': 57.1476} == marketvalue(test3)
+        assert {'marketvalue': 57.1476, 'quantity': 4, 'MIN': 57.1476} == marketvalue(test3)
 
