@@ -25,8 +25,8 @@ The realm names should be changed to slugs, basically all lowercase, space is re
 
 Your WOW_DIRECTORY is where you have your game installed, for example: `C:\Program Files (x86)\World of Warcraft`
 
-After you filled out `sample.env` rename in to `.env`
----
+### After you filled out `sample.env` rename in to `.env`
+
 Example `.env` file:
 ```
 OAUTH_CLIENT=<client id>
