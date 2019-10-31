@@ -8,23 +8,29 @@ from .printer import start_process_print, success_process_print
 from .update import get_oauth_token, get_auction_data_status, get_auction_data, parse_auctions
 
 def main():
+    # Loading the environmental variables
     load_dotenv()
 
+    # Betting the OAuth token from Blizzard's API
     start_process_print("Getting the OAuth token")
     oauth_token = get_oauth_token(getenv('OAUTH_CLIENT'), getenv('OAUTH_SECRET'))
     success_process_print("Getting the OAuth token")
 
+    # Checking the Auction House Data status
     start_process_print("Getting the Auction House status")
     ah_status = get_auction_data_status(oauth_token, getenv("REGION"), getenv("REALM"), getenv("LOCALE"))
     success_process_print("Getting the Auction House data")
 
+    # Getting the Auction House Data
     start_process_print("Getting the Auction House data (may take some time based on your internet speed)")
     auction_data = get_auction_data(ah_status['url'])
     success_process_print("Getting the Auction House data (may take some time based on your internet speed)")
 
+    # Parsing the Auctions
     print("\nParsing the data")
     parsed_auctions = parse_auctions(auction_data)
 
+    # Calculating the marketvalues
     print("\nCalculating marketvalues")
     marketvalues = []
     for item_ids, item_data in tqdm(parsed_auctions.items()):
@@ -35,6 +41,7 @@ def main():
         })
     print("\n")
 
+    # Writing the marketvalues to the Addon's file
     start_process_print("Writing marketvalues to file")
     data_path = path.join(getenv('WOW_DIRECTORY'), '_retail_', 'Interface', 'AddOns', 'Goblineer', 'data.lua')
 
