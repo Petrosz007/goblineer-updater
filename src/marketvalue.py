@@ -97,6 +97,3 @@ def dict_to_list(d: dict) -> list:
         tmp.extend(v * [k])
 
     return tmp
-
-if __name__ == '__main__':
-    marketvalue({129.4372: 2, 57.1476: 1, 129.4373: 1})
