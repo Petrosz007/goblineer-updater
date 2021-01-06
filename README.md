@@ -1,3 +1,5 @@
+This version of Goblineer is no longer updated, Goblineer's development is continuing on a new repository: https://github.com/Goblineer-AH
+
 # Goblineer updater
 
 Goblineer updater calculates the marketvalue of all items currently on the auctionhouse and outputs it to the Goblineer addon's folder. That file can be used for anything, but is required for the [Goblineer Addon](https://github.com/Petrosz007/goblineer-addon), [Goblineer Assistant](https://github.com/Petrosz007/goblineer-assistant), and [Quick Price Search](https://github.com/Petrosz007/goblineer-search)
